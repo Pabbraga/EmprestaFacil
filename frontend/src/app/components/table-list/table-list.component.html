@@ -1,0 +1,39 @@
+<div class="table-container">
+  <div class="button-bar">
+    <ion-button id="btn-create-item">
+      <ion-icon name="add-circle-sharp"></ion-icon>
+      <p>Criar</p>
+    </ion-button>
+  </div>
+  <div class="grid-container">
+    <ion-grid>
+      <ion-row>
+        @for (h of headers; track h; let i = $index) {
+          <ion-col sizeLg="" size="5" class="header-item list-item label">
+            <p>{{h}}</p>
+          </ion-col>
+        }
+        <ion-col sizeLg="" size="5" class="header-item list-item label">
+          <p>Ações</p>
+        </ion-col>
+      </ion-row>
+      @for (b of books; track b; let i = $index) {
+        <ion-row>
+          @for (ind of indexes; track ind; let j = $index) {
+            <ion-col sizeLg="" size="5" class="list-item label">
+              <p>{{b[ind]}}</p>
+            </ion-col>
+          }
+          <ion-col sizeLg="" size="5" class="list-item label">
+            <ion-button>
+              <ion-icon name="create-sharp"></ion-icon>
+            </ion-button>
+            <ion-button color="danger">
+              <ion-icon name="trash-sharp"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      }
+    </ion-grid>
+  </div>
+</div>
