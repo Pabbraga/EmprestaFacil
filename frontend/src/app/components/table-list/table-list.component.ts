@@ -55,7 +55,7 @@ export class TableListComponent implements OnInit {
       componentProps: {
         itemToModify: itemToModify,
         headers: this.headers,
-        keys: this.keys
+        indexes: this.keys
       }
     });
     modal.present();
