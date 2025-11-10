@@ -1,0 +1,16 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Membros</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Membros</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <div class="container">
+    <app-table-list [itemList]="members" [headers]="headers" [keys]="indexes"></app-table-list>
+  </div>
+</ion-content>

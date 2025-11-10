@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { IonGrid, IonCol, IonRow, IonButton, IonIcon, IonToolbar, ModalController, AlertController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addCircleSharp, createSharp, trashSharp } from 'ionicons/icons';
@@ -14,15 +14,9 @@ import { EditItemModalComponent } from '../edit-item-modal/edit-item-modal.compo
 })
 export class TableListComponent implements OnInit {
   
-  books: Book[] = [
-    {id: "1", title: "Fundamentos de bancos de dados", author: "Célio Cardoso Guimarães", publisher: "Unicamp", publicationYear: "2003"},
-    {id: "2", title: "Clean Code", author: "Robert C. Martin", publisher: "Pearson", publicationYear: "2008"},
-    {id: "3", title: "Lógica de Programação", author: "André Luiz Villar", publisher: "Bookman", publicationYear: "2022"}
-  ]
-  
-  headers = ["Título", "Autor", "Publicadora", "Ano"]
-
-  indexes: (keyof Book)[] = ["id", "title", "author", "publisher", "publicationYear"]
+  @Input() itemList: any[] = [];
+  @Input() headers!: string[];
+  @Input() keys!: any[];
 
   constructor(private modalCtrl: ModalController, private alertCtrl: AlertController) {
     addIcons({trashSharp, addCircleSharp, createSharp })
@@ -33,7 +27,7 @@ export class TableListComponent implements OnInit {
       component: CreateItemModalComponent,
       componentProps: {
         headers: this.headers,
-        indexes: this.indexes
+        indexes: this.keys
       }
     });
     modal.present();
@@ -41,7 +35,7 @@ export class TableListComponent implements OnInit {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      this.books.push(data);
+      this.itemList.push(data);
     }
   }
 
@@ -50,7 +44,7 @@ export class TableListComponent implements OnInit {
     const id = parentNode?.id;
 
     let itemToModify;
-    for (let i of this.books) {
+    for (let i of this.itemList) {
       if (i.id === id) {
         itemToModify = structuredClone(i);
       }
@@ -61,7 +55,7 @@ export class TableListComponent implements OnInit {
       componentProps: {
         itemToModify: itemToModify,
         headers: this.headers,
-        indexes: this.indexes
+        keys: this.keys
       }
     });
     modal.present();
@@ -69,9 +63,9 @@ export class TableListComponent implements OnInit {
     const { data, role } = await modal.onWillDismiss();
 
     if (role === 'confirm') {
-      const index = this.books.findIndex(obj => obj.id === id);
+      const index = this.itemList.findIndex(obj => obj.id === id);
       if (index !== -1) {
-        this.books[index] = data;
+        this.itemList[index] = data;
       }
     }
   }
@@ -92,9 +86,9 @@ export class TableListComponent implements OnInit {
           text: 'Sim',
           role: 'confirm',
           handler: () => {
-            const index = this.books.findIndex(obj => obj.id === id);
+            const index = this.itemList.findIndex(item => item.id === id);
             if (index !== -1) {
-              this.books.splice(index, 1);
+              this.itemList.splice(index, 1);
             }
           }
         }

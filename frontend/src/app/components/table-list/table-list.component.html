@@ -17,15 +17,15 @@
           <p>Ações</p>
         </ion-col>
       </ion-row>
-      @for (b of books; track b; let i = $index) {
-        <ion-row id="{{b['id']}}">
-          @for (ind of indexes.slice(1); track ind; let j = $index) {
+      @for (item of itemList; track item; let i = $index) {
+        <ion-row id="{{item['id']}}">
+          @for (ind of keys.slice(1); track ind; let j = $index) {
             <ion-col sizeLg="" size="5" class="list-item label">
-              <p>{{b[ind]}}</p>
+              <p>{{item[ind]}}</p>
             </ion-col>
           }
           <ion-col sizeLg="" size="5" class="list-item label">
-            <ion-button (click)="openEditItemModal($event)">
+            <ion-button color="secondary" (click)="openEditItemModal($event)">
               <ion-icon name="create-sharp"></ion-icon>
             </ion-button>
             <ion-button (click)="openDeleteItemAlert($event)" color="danger">
