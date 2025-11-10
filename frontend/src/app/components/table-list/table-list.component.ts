@@ -4,6 +4,7 @@ import { addIcons } from 'ionicons';
 import { addCircleSharp, createSharp, trashSharp } from 'ionicons/icons';
 import { Book } from 'src/app/models/book.model';
 import { CreateItemModalComponent } from '../create-item-modal/create-item-modal.component';
+import { EditItemModalComponent } from '../edit-item-modal/edit-item-modal.component';
 
 @Component({
   selector: 'app-table-list',
@@ -27,7 +28,7 @@ export class TableListComponent implements OnInit {
     addIcons({trashSharp, addCircleSharp, createSharp })
   }
 
-  async openModal() {
+  async openCreateItemModal() {
     const modal = await this.modalCtrl.create({
       component: CreateItemModalComponent,
       componentProps: {
@@ -41,6 +42,37 @@ export class TableListComponent implements OnInit {
 
     if (role === 'confirm') {
       this.books.push(data);
+    }
+  }
+
+  async openEditItemModal(event : Event) {
+    const parentNode = (event.target as HTMLElement).closest('ion-row');
+    const id = parentNode?.id;
+
+    let itemToModify;
+    for (let i of this.books) {
+      if (i.id === id) {
+        itemToModify = structuredClone(i);
+      }
+    }
+
+    const modal = await this.modalCtrl.create({
+      component: EditItemModalComponent,
+      componentProps: {
+        itemToModify: itemToModify,
+        headers: this.headers,
+        indexes: this.indexes
+      }
+    });
+    modal.present();
+
+    const { data, role } = await modal.onWillDismiss();
+
+    if (role === 'confirm') {
+      const index = this.books.findIndex(obj => obj.id === id);
+      if (index !== -1) {
+        this.books[index] = data;
+      }
     }
   }
 

@@ -1,6 +1,6 @@
 <div class="table-container">
   <ion-toolbar color="light-shade">
-    <ion-button (click)="openModal()" slot="end" size="small">
+    <ion-button (click)="openCreateItemModal()" slot="end" size="small">
       <ion-icon name="add-circle-sharp"></ion-icon>
       <p>Adicionar</p>
     </ion-button>
@@ -25,7 +25,7 @@
             </ion-col>
           }
           <ion-col sizeLg="" size="5" class="list-item label">
-            <ion-button>
+            <ion-button (click)="openEditItemModal($event)">
               <ion-icon name="create-sharp"></ion-icon>
             </ion-button>
             <ion-button color="danger">
