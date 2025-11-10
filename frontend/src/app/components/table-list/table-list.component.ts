@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { IonGrid, IonCol, IonRow, IonButton, IonIcon, ModalController, IonToolbar } from '@ionic/angular/standalone';
+import { IonGrid, IonCol, IonRow, IonButton, IonIcon, IonToolbar, ModalController, AlertController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { addCircleSharp, createSharp, trashSharp } from 'ionicons/icons';
 import { Book } from 'src/app/models/book.model';
@@ -24,7 +24,7 @@ export class TableListComponent implements OnInit {
 
   indexes: (keyof Book)[] = ["id", "title", "author", "publisher", "publicationYear"]
 
-  constructor(private modalCtrl: ModalController) {
+  constructor(private modalCtrl: ModalController, private alertCtrl: AlertController) {
     addIcons({trashSharp, addCircleSharp, createSharp })
   }
 
@@ -74,6 +74,34 @@ export class TableListComponent implements OnInit {
         this.books[index] = data;
       }
     }
+  }
+
+  async openDeleteItemAlert(event : Event) {
+    const parentNode = (event.target as HTMLElement).closest('ion-row');
+    const id = parentNode?.id;
+
+    const alert = await this.alertCtrl.create({
+      header: 'Apagar',
+      message: 'Você deseja continuar?',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel'
+        },
+        {
+          text: 'Sim',
+          role: 'confirm',
+          handler: () => {
+            const index = this.books.findIndex(obj => obj.id === id);
+            if (index !== -1) {
+              this.books.splice(index, 1);
+            }
+          }
+        }
+      ],
+    });
+
+    await alert.present();
   }
 
   ngOnInit() {}
