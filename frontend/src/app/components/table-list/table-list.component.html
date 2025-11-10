@@ -9,22 +9,22 @@
     <ion-grid>
       <ion-row>
         @for (h of headers; track h; let i = $index) {
-          <ion-col sizeLg="" size="5" class="header-item list-item label">
+          <ion-col sizeLg="" size="6" class="header-item list-item label">
             <p>{{h}}</p>
           </ion-col>
         }
-        <ion-col sizeLg="" size="5" class="header-item list-item label">
+        <ion-col sizeLg="" size="6" class="header-item list-item label">
           <p>Ações</p>
         </ion-col>
       </ion-row>
       @for (item of itemList; track item; let i = $index) {
         <ion-row id="{{item['id']}}">
           @for (ind of keys.slice(1); track ind; let j = $index) {
-            <ion-col sizeLg="" size="5" class="list-item label">
+            <ion-col sizeLg="" size="6" class="list-item label" title="{{item[ind]}}">
               <p>{{item[ind]}}</p>
             </ion-col>
           }
-          <ion-col sizeLg="" size="5" class="list-item label">
+          <ion-col sizeLg="" size="6" class="list-item label">
             <ion-button color="secondary" (click)="openEditItemModal($event)">
               <ion-icon name="create-sharp"></ion-icon>
             </ion-button>

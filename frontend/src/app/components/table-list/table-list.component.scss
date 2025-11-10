@@ -9,7 +9,8 @@ ion-row {
 
 ion-col {
     width: 5em;
-    padding: 0 0.7em;
+    padding: 0 1em;
+    overflow: hidden;
     background-color: var(--ion-color-light-shade);
 }
 
