@@ -10,7 +10,7 @@ ion-row {
 ion-col {
     width: 5em;
     padding: 0 1em;
-    overflow: hidden;
+    overflow: clip;
     background-color: var(--ion-color-light-shade);
 }
 
@@ -44,4 +44,12 @@ ion-col:last-child.list-item {
 
 .hidden {
     display: none;
+}
+
+.datetime-item {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+    gap: 1em;
+    background-color: var(--ion-item-background);
 }

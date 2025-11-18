@@ -9,22 +9,44 @@
     <ion-grid>
       <ion-row>
         @for (h of headers; track h; let i = $index) {
-          <ion-col sizeLg="" size="6" class="header-item list-item label">
+          <ion-col sizeLg="2.4" size="6" class="header-item list-item label">
             <p>{{h}}</p>
           </ion-col>
         }
-        <ion-col sizeLg="" size="6" class="header-item list-item label">
+        @if (type === "loan") {
+          <ion-col sizeLg="2.4" size="6" class="header-item list-item label">
+            <p>Data de Empréstimo</p>
+          </ion-col>
+          <ion-col sizeLg="2.4" size="6" class="header-item list-item label">
+            <p>Prazo de Devolução</p>
+          </ion-col>
+          <ion-col sizeLg="2.4" size="6" class="header-item list-item label">
+            <p>Data de Devolução</p>
+          </ion-col>
+        }
+        <ion-col sizeLg="2.4" size="6" class="header-item list-item label">
           <p>Ações</p>
         </ion-col>
       </ion-row>
       @for (item of itemList; track item; let i = $index) {
         <ion-row id="{{item['id']}}">
           @for (ind of keys.slice(1); track ind; let j = $index) {
-            <ion-col sizeLg="" size="6" class="list-item label" title="{{item[ind]}}">
-              <p>{{item[ind]}}</p>
+            <ion-col sizeLg="2.4" size="6" class="list-item label" title="{{item[ind]}}">
+              <p>{{getNestedValue(item, ind)}}</p>
             </ion-col>
           }
-          <ion-col sizeLg="" size="6" class="list-item label">
+          @if (type === "loan") {
+            <ion-col sizeLg="2.4" size="6" class="list-item label">
+              <p>{{item.loanDatetime | date:'dd/MM/yyyy HH:mm'}}</p>
+            </ion-col>
+            <ion-col sizeLg="2.4" size="6" class="list-item label">
+              <p>{{item.dueDate | date:'dd/MM/yyyy'}}</p>
+            </ion-col>
+            <ion-col sizeLg="2.4" size="6" class="list-item label">
+              <p>{{item.checkoutDatetime ? (item.checkoutDatetime | date:'dd/MM/yyyy HH:mm') : 'Pendente'}}</p>
+            </ion-col>
+          }
+          <ion-col sizeLg="2.4" size="6" class="list-item label">
             <ion-button color="secondary" (click)="openEditItemModal($event)">
               <ion-icon name="create-sharp"></ion-icon>
             </ion-button>

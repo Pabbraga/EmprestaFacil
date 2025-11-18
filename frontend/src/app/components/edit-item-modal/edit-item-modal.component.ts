@@ -8,15 +8,24 @@ import {
   IonInput,
   IonItem,
   IonTitle,
+  IonLabel,
   IonToolbar,
   ModalController,
-  ToastController
+  ToastController,
+  IonDatetime,
+  IonDatetimeButton,
+  IonModal,
+  IonCheckbox,
+  IonSelect,
+  IonSelectOption
 } from '@ionic/angular/standalone';
+import { Book } from 'src/app/models/book.model';
+import { Member } from 'src/app/models/member.model';
 
 @Component({
   selector: 'app-edit-item-modal',
   templateUrl: './edit-item-modal.component.html',
-  styleUrls: ['./edit-item-modal.component.scss'],
+  styleUrls: ['./edit-item-modal.component.scss', '../table-list/table-list.component.scss'],
   imports: [
     FormsModule,
     IonButton,
@@ -26,15 +35,29 @@ import {
     IonInput,
     IonItem,
     IonTitle,
+    IonLabel,
     IonToolbar,
+    IonDatetime,
+    IonDatetimeButton,
+    IonModal,
+    IonCheckbox,
+    IonSelect,
+    IonSelectOption
   ],
 })
 export class EditItemModalComponent implements OnInit {
   
-  @Input() itemToModify: Record<string, string> = {};
+  @Input() itemToModify: Record<string, any> = {};
   @Input() headers!: string[];
   @Input() indexes!: string[];
-  
+  @Input() type!: string;
+  loanDatetime!: string;
+  dueDate!: string;
+  isReturned!: Boolean;
+  checkoutDatetime!: string;
+  selectedMember!: Member;
+  selectedBook!: Book;
+
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController) {}
 
   async presentToast() {
@@ -53,12 +76,27 @@ export class EditItemModalComponent implements OnInit {
   }
 
   confirm() {
+    if (this.type === "loan") {
+      this.itemToModify['loanDatetime'] = this.loanDatetime;
+      this.itemToModify['dueDate'] = this.dueDate;
+      this.itemToModify['isReturned'] = this.isReturned;
+      this.itemToModify['checkoutDatetime'] = this.checkoutDatetime;
+    }
     this.presentToast();
     return this.modalCtrl.dismiss(this.itemToModify, 'confirm');
   }
   
   ngOnInit() {
-    
+    // loads item's existing data
+    if (this.type === "loan") {
+      this.selectedMember = this.itemToModify['member'];
+      this.selectedBook = this.itemToModify['book'];
+      this.loanDatetime = this.itemToModify['loanDatetime'];
+      this.dueDate = this.itemToModify['dueDate'];
+      this.isReturned = this.itemToModify['isReturned'];
+      // if there is no checkoutDatetime use a new Date with now
+      this.checkoutDatetime = this.itemToModify['checkoutDatetime'] ? this.itemToModify['checkoutDatetime'] : new Date().toISOString();
+    }
   }
   
 }

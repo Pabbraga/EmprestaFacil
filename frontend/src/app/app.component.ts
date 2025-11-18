@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { IonApp, IonSplitPane, IonMenu, IonContent, IonList, IonListHeader, IonNote, IonMenuToggle, IonItem, IonIcon, IonLabel, IonRouterOutlet, IonRouterLink } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp, bookSharp, create, createSharp, personSharp } from 'ionicons/icons';
+import { mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, heartOutline, heartSharp, archiveOutline, archiveSharp, trashOutline, trashSharp, warningOutline, warningSharp, bookmarkOutline, bookmarkSharp, bookSharp, create, createSharp, personSharp, bookmarksSharp } from 'ionicons/icons';
 
 @Component({
   selector: 'app-root',
@@ -15,8 +15,9 @@ export class AppComponent {
   public appPages = [
     { title: 'Livros', url: 'book-list', icon: 'book' },
     { title: 'Membros', url: 'member-list', icon: 'person' },
+    { title: 'Empréstimos', url: 'book-loan-list', icon: 'bookmarks' }
   ];
   constructor() {
-    addIcons({ bookSharp, personSharp });
+    addIcons({ bookSharp, personSharp, bookmarksSharp });
   }
 }

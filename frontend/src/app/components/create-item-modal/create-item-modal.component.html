@@ -11,8 +11,46 @@
 </ion-header>
 <ion-content class="ion-padding">
   @for (h of headers; track h; let i = $index) {
-    <ion-item>
+    <ion-item [style.display]="(type==='loan'?'none':'block')">
       <ion-input labelPlacement="stacked" label="{{h}}" [(ngModel)]="newItem[indexes[i+1]]" placeholder="{{h}}"></ion-input>
     </ion-item>
+  }
+  @if (type === 'loan') {
+    <ion-item>
+      <ion-select label="Membro" label-placement="stacked" placeholder="Selecione um Membro" [(ngModel)]="selectedMember">
+        @for (member of members; track member) {
+          <ion-select-option [value]="member">{{member.name}}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-select label="Livro" label-placement="stacked" placeholder="Selecione um Livro" [(ngModel)]="selectedBook
+      ">
+        @for (book of books; track book) {
+          <ion-select-option [value]="book">{{book.title}}</ion-select-option>
+        }
+      </ion-select>
+    </ion-item>
+    <div class="datetime-item">
+      <ion-label>Data de Empréstimo</ion-label>
+      <ion-datetime-button datetime="loan-datetime"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime [(ngModel)]="loanDatetime" id="loan-datetime">
+            <span slot="time-label">Horário</span>
+          </ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </div>
+    <div class="datetime-item">
+      <ion-label>Prazo de Devolução</ion-label>
+      <ion-datetime-button datetime="due-date"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime [(ngModel)]="dueDate" presentation="date" id="due-date">
+          </ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </div>
   }
 </ion-content>
