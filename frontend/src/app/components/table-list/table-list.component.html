@@ -30,9 +30,9 @@
       </ion-row>
       @for (item of itemList; track item; let i = $index) {
         <ion-row id="{{item['id']}}">
-          @for (ind of keys.slice(1); track ind; let j = $index) {
-            <ion-col sizeLg="2.4" size="6" class="list-item label" title="{{item[ind]}}">
-              <p>{{getNestedValue(item, ind)}}</p>
+          @for (key of keys; track key; let j = $index) {
+            <ion-col sizeLg="2.4" size="6" class="list-item label" title="{{item[key]}}">
+              <p>{{getNestedValue(item, key)}}</p>
             </ion-col>
           }
           @if (type === "loan") {
@@ -43,7 +43,7 @@
               <p>{{item.dueDate | date:'dd/MM/yyyy'}}</p>
             </ion-col>
             <ion-col sizeLg="2.4" size="6" class="list-item label">
-              <p>{{item.checkoutDatetime ? (item.checkoutDatetime | date:'dd/MM/yyyy HH:mm') : 'Pendente'}}</p>
+              <p>{{item.isReturned ? (item.checkoutDatetime | date:'dd/MM/yyyy HH:mm') : 'Pendente'}}</p>
             </ion-col>
           }
           <ion-col sizeLg="2.4" size="6" class="list-item label">

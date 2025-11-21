@@ -20,6 +20,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Book } from 'src/app/models/book.model';
 import { Member } from 'src/app/models/member.model';
+import { LocalStorageService } from 'src/app/services/local-storage';
 
 @Component({
   selector: 'app-create-item-modal',
@@ -53,22 +54,14 @@ export class CreateItemModalComponent implements OnInit {
   selectedMember!: Member;
   selectedBook!: Book;
 
-  members: Member[] = [
-    {'id': "1", 'name': "João Ferraz", 'email': "joaoferraz@email.com"},
-    {'id': "2", 'name': "Letícia Oliveira", 'email': "leticiaveira@email.com"}
-  ]
-
-  books: Book[] = [
-    {id: "1", title: "Fundamentos de bancos de dados", author: "Célio Cardoso Guimarães", publisher: "Unicamp", publicationYear: "2003"},
-    {id: "2", title: "Clean Code", author: "Robert C. Martin", publisher: "Pearson", publicationYear: "2008"},
-    {id: "3", title: "Lógica de Programação", author: "André Luiz Villar", publisher: "Bookman", publicationYear: "2022"}
-  ];
+  members: Member[] = this.localStorage.getData('members');
+  books: Book[] = this.localStorage.getData('books');
   
   lastId = (document.querySelector("ion-grid")?.lastElementChild?.id ?? '0');
   
   newItem: Record<string, any> = {};
   
-  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController) {}
+  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, private localStorage: LocalStorageService) {}
 
   async presentToast() {
     const toast = await this.toastCtrl.create({

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton } from '@ionic/angular/standalone';
 import { TableListComponent } from 'src/app/components/table-list/table-list.component';
 import { Book } from 'src/app/models/book.model';
+import { LocalStorageService } from 'src/app/services/local-storage';
 
 @Component({
   selector: 'app-book-list',
@@ -14,17 +15,11 @@ import { Book } from 'src/app/models/book.model';
 })
 export class BookListPage implements OnInit {
 
-  books: Book[] = [
-    {id: "1", title: "Fundamentos de bancos de dados", author: "Célio Cardoso Guimarães", publisher: "Unicamp", publicationYear: "2003"},
-    {id: "2", title: "Clean Code", author: "Robert C. Martin", publisher: "Pearson", publicationYear: "2008"},
-    {id: "3", title: "Lógica de Programação", author: "André Luiz Villar", publisher: "Bookman", publicationYear: "2022"}
-  ];
+  books: Book[] = this.localStorage.getData('books');
 
   headers = ["Título", "Autor", "Publicadora", "Ano"];
 
-  indexes = ["id", "title", "author", "publisher", "publicationYear"];
-
-  constructor() { }
+  constructor(private localStorage : LocalStorageService) { }
 
   ngOnInit() {
   }

@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { IonContent, IonHeader, IonTitle, IonToolbar, IonButtons, IonMenuButton } from '@ionic/angular/standalone';
 import { TableListComponent } from 'src/app/components/table-list/table-list.component';
 import { Member } from 'src/app/models/member.model';
+import { LocalStorageService } from 'src/app/services/local-storage';
 
 @Component({
   selector: 'app-member-list',
@@ -14,16 +15,11 @@ import { Member } from 'src/app/models/member.model';
 })
 export class MemberListPage implements OnInit {
 
-  members: Member[] = [
-    {'id': "1", 'name': "João Ferraz", 'email': "joaoferraz@email.com"},
-    {'id': "2", 'name': "Letícia Oliveira", 'email': "leticiaveira@email.com"}
-  ]
+  members: Member[] = this.localStorage.getData('members');
 
   headers = ["Nome", "Email"];
 
-  indexes = ["id", "name", "email",];
-
-  constructor() { }
+  constructor(private localStorage : LocalStorageService) { }
 
   ngOnInit() {
   }

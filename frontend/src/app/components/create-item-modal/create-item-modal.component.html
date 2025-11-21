@@ -12,7 +12,7 @@
 <ion-content class="ion-padding">
   @for (h of headers; track h; let i = $index) {
     <ion-item [style.display]="(type==='loan'?'none':'block')">
-      <ion-input labelPlacement="stacked" label="{{h}}" [(ngModel)]="newItem[indexes[i+1]]" placeholder="{{h}}"></ion-input>
+      <ion-input labelPlacement="stacked" label="{{h}}" [(ngModel)]="newItem[indexes[i]]" placeholder="{{h}}"></ion-input>
     </ion-item>
   }
   @if (type === 'loan') {
