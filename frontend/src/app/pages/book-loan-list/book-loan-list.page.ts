@@ -17,8 +17,6 @@ export class BookLoanListPage implements OnInit {
 
   bookLoans: BookLoan[] = this.localStorage.getData('bookLoans');
 
-  headers = ["Membro", "Email", "Título", "Autor"];
-
   constructor(private localStorage : LocalStorageService) { }
 
   ngOnInit() {

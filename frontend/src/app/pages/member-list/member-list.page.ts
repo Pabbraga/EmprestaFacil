@@ -17,8 +17,6 @@ export class MemberListPage implements OnInit {
 
   members: Member[] = this.localStorage.getData('members');
 
-  headers = ["Nome", "Email"];
-
   constructor(private localStorage : LocalStorageService) { }
 
   ngOnInit() {

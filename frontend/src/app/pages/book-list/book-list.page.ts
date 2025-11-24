@@ -17,8 +17,6 @@ export class BookListPage implements OnInit {
 
   books: Book[] = this.localStorage.getData('books');
 
-  headers = ["Título", "Autor", "Publicadora", "Ano"];
-
   constructor(private localStorage : LocalStorageService) { }
 
   ngOnInit() {

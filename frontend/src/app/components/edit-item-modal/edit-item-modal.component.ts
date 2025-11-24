@@ -51,12 +51,6 @@ export class EditItemModalComponent implements OnInit {
   @Input() headers!: string[];
   @Input() indexes!: string[];
   @Input() type!: string;
-  loanDatetime!: string;
-  dueDate!: string;
-  isReturned!: Boolean;
-  checkoutDatetime!: string;
-  selectedMember!: Member;
-  selectedBook!: Book;
 
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController) {}
 
@@ -76,26 +70,14 @@ export class EditItemModalComponent implements OnInit {
   }
 
   confirm() {
-    if (this.type === "loan") {
-      this.itemToModify['loanDatetime'] = this.loanDatetime;
-      this.itemToModify['dueDate'] = this.dueDate;
-      this.itemToModify['isReturned'] = this.isReturned;
-      this.itemToModify['checkoutDatetime'] = this.checkoutDatetime;
-    }
     this.presentToast();
     return this.modalCtrl.dismiss(this.itemToModify, 'confirm');
   }
   
   ngOnInit() {
-    // loads item's existing data
     if (this.type === "loan") {
-      this.selectedMember = this.itemToModify['member'];
-      this.selectedBook = this.itemToModify['book'];
-      this.loanDatetime = this.itemToModify['loanDatetime'];
-      this.dueDate = this.itemToModify['dueDate'];
-      this.isReturned = this.itemToModify['isReturned'];
       // if there is no checkoutDatetime use a new Date with now
-      this.checkoutDatetime = this.itemToModify['checkoutDatetime'] ? this.itemToModify['checkoutDatetime'] : new Date().toISOString();
+      this.itemToModify['checkoutDatetime'] = this.itemToModify['checkoutDatetime'] ? this.itemToModify['checkoutDatetime'] : new Date().toISOString();
     }
   }
   

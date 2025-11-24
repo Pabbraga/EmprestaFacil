@@ -21,10 +21,10 @@
         label="Membro" 
         label-placement="stacked" 
         placeholder="Selecione um Membro" 
-        [(ngModel)]="selectedMember"
+        [(ngModel)]="itemToModify['member']"
         disabled="true"
         >
-          <ion-select-option [value]="selectedMember">{{selectedMember.name}}</ion-select-option>
+          <ion-select-option [value]="itemToModify['member']">{{itemToModify['member']['name']}}</ion-select-option>
       </ion-select>
     </ion-item>
     <ion-item>
@@ -32,10 +32,10 @@
         label="Livro" 
         label-placement="stacked" 
         placeholder="Selecione um Livro" 
-        [(ngModel)]="selectedBook"
+        [(ngModel)]="itemToModify['book']"
         disabled="true"
       >
-          <ion-select-option [value]="selectedBook">{{selectedBook.title}}</ion-select-option>
+          <ion-select-option [value]="itemToModify['book']">{{itemToModify['book']['title']}}</ion-select-option>
       </ion-select>
     </ion-item>
     <div class="datetime-item">
@@ -43,7 +43,7 @@
       <ion-datetime-button datetime="loan-datetime"></ion-datetime-button>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
-          <ion-datetime [(ngModel)]="loanDatetime" id="loan-datetime"></ion-datetime>
+          <ion-datetime [(ngModel)]="itemToModify['loanDatetime']" id="loan-datetime"></ion-datetime>
         </ng-template>
       </ion-modal>
     </div>
@@ -52,20 +52,20 @@
       <ion-datetime-button datetime="due-date"></ion-datetime-button>
       <ion-modal [keepContentsMounted]="true">
         <ng-template>
-          <ion-datetime [(ngModel)]="dueDate" presentation="date" id="due-date"></ion-datetime>
+          <ion-datetime [(ngModel)]="itemToModify['dueDate']" presentation="date" id="due-date"></ion-datetime>
         </ng-template>
       </ion-modal>
     </div>
     <ion-item>
-      <ion-checkbox [(ngModel)]="isReturned" labelPlacement="end">Devolvido</ion-checkbox>
+      <ion-checkbox [(ngModel)]="itemToModify['isReturned']" labelPlacement="end">Devolvido</ion-checkbox>
     </ion-item>
-    @if (isReturned) {
+    @if (itemToModify['isReturned']) {
       <div class="datetime-item">
         <ion-label>Data de Devolução</ion-label>
         <ion-datetime-button datetime="checkout-datetime"></ion-datetime-button>
         <ion-modal [keepContentsMounted]="true">
           <ng-template>
-            <ion-datetime [(ngModel)]="checkoutDatetime" id="checkout-datetime"></ion-datetime>
+            <ion-datetime [(ngModel)]="itemToModify['checkoutDatetime']" id="checkout-datetime"></ion-datetime>
           </ng-template>
         </ion-modal>
       </div>

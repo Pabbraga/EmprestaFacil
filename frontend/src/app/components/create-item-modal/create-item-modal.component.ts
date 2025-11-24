@@ -49,10 +49,6 @@ export class CreateItemModalComponent implements OnInit {
   @Input() headers!: string[];
   @Input() indexes!: string[];
   @Input() type!: string;
-  loanDatetime: string = new Date().toISOString();
-  dueDate: string = new Date().toISOString();
-  selectedMember!: Member;
-  selectedBook!: Book;
 
   members: Member[] = this.localStorage.getData('members');
   books: Book[] = this.localStorage.getData('books');
@@ -79,22 +75,15 @@ export class CreateItemModalComponent implements OnInit {
   }
 
   confirm() {
-    console.log(this.selectedMember)
-    if (this.type === "loan") {
-      this.newItem['member'] = this.selectedMember;
-      this.newItem['book'] = this.selectedBook;
-      this.newItem['loanDatetime'] = this.loanDatetime;
-      this.newItem['dueDate'] = this.dueDate;
-    }
+    this.newItem['id'] = (parseInt(this.lastId) + 1).toString();
     this.presentToast();
     return this.modalCtrl.dismiss(this.newItem, 'confirm');
   }
   
   ngOnInit() {
-    for (let index of this.indexes) {
-      this.newItem[index] = ''
-    }
-    this.newItem['id'] = (parseInt(this.lastId) + 1).toString();
+    // sets initial data
+    this.newItem['loanDatetime'] = new Date().toISOString();
+    this.newItem['dueDate'] = new Date().toISOString();
   }
   
 }

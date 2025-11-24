@@ -30,12 +30,26 @@
       </ion-row>
       @for (item of itemList; track item; let i = $index) {
         <ion-row id="{{item['id']}}">
-          @for (key of keys; track key; let j = $index) {
-            <ion-col sizeLg="2.4" size="6" class="list-item label" title="{{item[key]}}">
-              <p>{{getNestedValue(item, key)}}</p>
-            </ion-col>
+          @if (type !== "loan") {
+            @for (key of keys; track key; let j = $index) {
+              <ion-col sizeLg="2.4" size="6" class="list-item label" title="{{item[key]}}">
+                <p>{{item[key]}}</p>
+              </ion-col>
+            }
           }
-          @if (type === "loan") {
+          @else {
+            <ion-col sizeLg="2.4" size="6" class="list-item label">
+              <p>{{item.member.name}}</p>
+            </ion-col>
+            <ion-col sizeLg="2.4" size="6" class="list-item label">
+              <p>{{item.member.email}}</p>
+            </ion-col>
+            <ion-col sizeLg="2.4" size="6" class="list-item label">
+              <p>{{item.book.title}}</p>
+            </ion-col>
+            <ion-col sizeLg="2.4" size="6" class="list-item label">
+              <p>{{item.book.author}}</p>
+            </ion-col>
             <ion-col sizeLg="2.4" size="6" class="list-item label">
               <p>{{item.loanDatetime | date:'dd/MM/yyyy HH:mm'}}</p>
             </ion-col>

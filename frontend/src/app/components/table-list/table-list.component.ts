@@ -25,7 +25,7 @@ export class TableListComponent implements OnInit {
     addIcons({trashSharp, addCircleSharp, createSharp })
   }
 
-  // gets object keys to use in future iterations
+  // gets object keys to use in iterations
   getKeys(): string[] {
     if (this.itemList.length > 0) {
       return Object.keys(this.itemList[0]).filter(key => key !== 'id');
@@ -122,17 +122,9 @@ export class TableListComponent implements OnInit {
     await alert.present();
   }
   
-  // handle to get values in two-dimensional level
-  getNestedValue(obj: any, path: string): any {
-    return path.split('.').reduce((current, key) => {
-      return current?.[key];
-    }, obj);
-  }
-  
   ngOnInit() {
     // loads keys used in iterations to show data on grid
-    // ternary used for distinct type loan
-    this.keys = this.type === 'loan' ? ["member.name", "member.email", "book.title", "book.author"] : this.getKeys();
+    this.keys = this.getKeys();
   }
   
 }
