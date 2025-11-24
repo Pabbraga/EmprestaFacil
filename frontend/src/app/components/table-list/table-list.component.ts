@@ -54,7 +54,7 @@ export class TableListComponent implements OnInit {
   
   async openEditItemModal(event : Event) {
     const parentNode = (event.target as HTMLElement).closest('ion-row');
-    const id = parentNode?.id;
+    const id = parentNode?.id || '';
     
     let itemToModify;
     for (let i of this.itemList) {
@@ -87,7 +87,7 @@ export class TableListComponent implements OnInit {
   
   async openDeleteItemAlert(event : Event) {
     const parentNode = (event.target as HTMLElement).closest('ion-row');
-    const id = parentNode?.id;
+    const id = parentNode?.id || '';
 
     const toast = await this.toastCtrl.create({
       message: 'Item apagado com sucesso!',
@@ -108,9 +108,9 @@ export class TableListComponent implements OnInit {
           text: 'Sim',
           role: 'confirm',
           handler: async () => {
-            const index = this.itemList.findIndex(item => item.id === id);
-            if (index !== -1) {
-              this.localStorage.removeItem(this.baseType, index);
+            const itemIndex = this.itemList.findIndex(item => item.id === id);
+            if (itemIndex !== -1) {
+              this.localStorage.removeItem(this.baseType, id);
               this.itemList = this.localStorage.getData(this.baseType);
               await toast.present(); 
             }
@@ -118,6 +118,10 @@ export class TableListComponent implements OnInit {
         }
       ],
     });
+
+    if (this.baseType === "books" || this.baseType === "members") {
+      alert.message = "Itens vinculados podem ser excluídos. Você deseja continuar?"
+    }
     
     await alert.present();
   }

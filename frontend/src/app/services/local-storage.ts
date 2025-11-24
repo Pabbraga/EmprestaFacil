@@ -84,17 +84,56 @@ export class LocalStorageService {
     this.setData(dataKey, updatedList);
   }
 
+  // searches and updates nested item in bookLoan
+  updateNestedItem(dataKey: 'books' | 'members', value: any): void {
+    const updatedLoans: any[] = this.getData('bookLoans');
+    updatedLoans.map(loan => {
+      if (dataKey === 'books' && loan.book?.id === value.id) {
+        loan.book = { ...value };
+      }
+      if (dataKey === 'members' && loan.member?.id === value.id) {
+        loan.member = { ...value };
+      }
+    })
+
+    this.setData('bookLoans', updatedLoans);
+  }
+
   // updates item to data LocalStorage
   updateItem(dataKey: string, index: number, value: any): void {
     const updatedList: any[] = this.getData(dataKey);
     updatedList[index] = { ...value };
+    if (dataKey === 'books' || dataKey === 'members') {
+      this.updateNestedItem(dataKey, value);
+    }
     this.setData(dataKey, updatedList);
   }
 
+  // searches and deletes book
+  private updateBookLoansOnDeletion(dataKey: 'books' | 'members', id: string): void {
+    const loans: any[] = this.getData('bookLoans');
+    const updatedLoans = loans.filter(loan => {
+      if (dataKey === 'books') {
+        return loan.book.id !== id;
+      }
+     
+      else if (dataKey === 'members') {
+        return loan.member.id !== id;
+      }
+      return true;
+    });
+    this.setData('bookLoans', updatedLoans);
+  }
+
   // removes item from data LocalStorage
-  removeItem(dataKey: string, index: number): void {
-    const updatedList: any[] = this.getData(dataKey);
-    updatedList.splice(index, 1);
+  removeItem(dataKey: string, id: string): void {
+    const dataList: any[] = this.getData(dataKey);
+    const updatedList = dataList.filter(item => {
+      return item.id !== id;
+    });
+    if (dataKey === 'books' || dataKey === 'members') {
+      this.updateBookLoansOnDeletion(dataKey, id);
+    }
     this.setData(dataKey, updatedList);
   }
 
